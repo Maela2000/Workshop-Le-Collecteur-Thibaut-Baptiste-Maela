@@ -8,13 +8,15 @@ public class GameplayManager : MonoBehaviour
     #region variable
     public static GameplayManager Instance;
 
-    public GameObject Player;
+    public GameObject player;
+    //public GameObject boss;
     public float Score = 0;
     public GameObject panelGameOver;
     public GameObject panelWin;
     public GameObject Life3;
     public GameObject Life2;
     public GameObject Life1;
+    public GameObject BulletG;
     public GameObject Camera;
     #endregion
 
@@ -50,6 +52,25 @@ public class GameplayManager : MonoBehaviour
             Time.timeScale = 1;
             AudioListener.pause = false;
         }
+
+        if(Score<1000)
+        {
+            BulletG.SetActive(false);
+        }
+
+        if (Score >= 1000)
+        {
+            BulletG.SetActive(true);
+            if (Input.GetKey("g"))
+            {
+                Instantiate(player.GetComponent<Player>().bulletG, player.GetComponent<Player>().pointfire2.position, player.GetComponent<Player>().pointfire2.rotation);
+                Score = 0;
+            }
+        }
+        /*if (boss.GetComponent<Boss>().healthPts <= 0)
+        {
+            ShowWin();
+        }*/
     }
     #endregion
 
@@ -83,10 +104,10 @@ public class GameplayManager : MonoBehaviour
         Camera.SetActive(true);
     }
 
-    /*public void ShowWin()
+    public void ShowWin()
     {
         panelWin.SetActive(true);
-    }*/
+    }
 
     public void OnClick_Menu()
     {
@@ -103,19 +124,11 @@ public class GameplayManager : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
-    public void OnClick_Continue2()
-    {
-        SceneManager.LoadScene(3);
-    }
 
     public void OnClick_Retry2()
     {
         SceneManager.LoadScene(2);
     }
 
-    public void OnClick_Retry3()
-    {
-        SceneManager.LoadScene(3);
-    }
     #endregion
 }

@@ -5,21 +5,17 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public float Bulletspeed;
+    public Rigidbody2D rb;
     // Start is called before the first frame update
     void Start()
     {
-        Destroy(gameObject, 8.5f);
+        Destroy(gameObject, 3.5f);
+        rb.velocity = transform.right * Bulletspeed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        float Horizontal = Input.GetAxis("Horizontal");
-        
-        if (Horizontal != 0) //Rotate player sprite to the left        
-        { 
-            GetComponent<SpriteRenderer>().flipX = Horizontal < 0;
-        }
-            transform.Translate(Vector3.right * Bulletspeed * Time.deltaTime);
+
     }
 }

@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 9173016132590674227}
   - component: {fileID: 8571310917503945366}
   - component: {fileID: 8563065437232942709}
-  - component: {fileID: 856245777126932911}
+  - component: {fileID: -3987200783990332743}
+  - component: {fileID: 6879104003672231576}
   m_Layer: 0
   m_Name: BulletE1
   m_TagString: BulletEnemy
@@ -109,7 +110,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.2, y: 0.2}
   m_EdgeRadius: 0
---- !u!114 &856245777126932911
+--- !u!114 &-3987200783990332743
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,5 +122,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4111dfad5312d8c429c4186a63e6b813, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Bulletspeed: 10
-  player: {fileID: 0}
+  Bulletspeed: 6
+  rb: {fileID: 6879104003672231576}
+--- !u!50 &6879104003672231576
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5119047463233825244}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4

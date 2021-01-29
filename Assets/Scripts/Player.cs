@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+   
     [SerializeField]
     // private Animator animator;
     public float speed, jumpforce;
@@ -11,8 +12,11 @@ public class Player : MonoBehaviour
     Rigidbody2D rb;
 
     public GameObject bullet;
-    public Vector3 bulletOffset;
+    public GameObject bulletB;
+    public GameObject bulletG;
     public int healthPts;
+    public Transform pointfire;
+    public Transform pointfire2;
 
     void Start()
     {
@@ -24,15 +28,15 @@ public class Player : MonoBehaviour
     void Update()
     {
         float xPos = Input.GetAxis("Horizontal");
-        float yPos = Input.GetAxis("Vertical");
-
 
         if (xPos != 0) //Rotate player sprite to the left
-        { GetComponent<SpriteRenderer>().flipX = xPos < 0; }
+        {
+            GetComponent<SpriteRenderer>().flipX = xPos < 0;
+        }
 
-        //animator.SetFloat("Speed", (Mathf.Abs(xPos) + Mathf.Abs(yPos)) * speed);
+            //animator.SetFloat("Speed", (Mathf.Abs(xPos) + Mathf.Abs(yPos)) * speed);
 
-        if (Input.GetKey("left"))
+            if (Input.GetKey("left"))
         {
             transform.Translate(Vector3.left * speed * Time.deltaTime);
         }
@@ -47,9 +51,30 @@ public class Player : MonoBehaviour
             rb.velocity = Vector2.up * jumpforce;
         }
 
-        if (xPos == 0 && yPos == 0 && Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            Instantiate(bullet, transform.position + bulletOffset, transform.rotation);
+            if (GetComponent<SpriteRenderer>().flipX = xPos >= 0)
+            {
+                Instantiate(bullet, pointfire2.position, pointfire2.rotation);
+            }
+
+            if (GetComponent<SpriteRenderer>().flipX = xPos < 0)
+            {
+                Instantiate(bullet, pointfire.position, pointfire.rotation);
+            }
+        }
+
+        if(Input.GetKeyDown(KeyCode.B))
+        {
+            if (xPos < 0)
+            {
+                Instantiate(bulletB, pointfire.position, pointfire.rotation);
+            }
+
+            if (xPos >= 0)
+            {
+                Instantiate(bulletB, pointfire2.position, pointfire2.rotation);
+            }
         }
 
         if (healthPts <= 0)

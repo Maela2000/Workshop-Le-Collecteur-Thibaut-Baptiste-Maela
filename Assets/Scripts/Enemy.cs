@@ -11,7 +11,9 @@ public class Enemy : MonoBehaviour
     private float waitTime;
     public float startWaitTime;
     public GameObject bulletEnemy;
-    public Vector3 bulletOffset;
+    public Transform pointfire;
+    public Transform pointfire2;
+    private Transform target;
     public Transform[] moveSpots;//creation of gameobject which will serve as indicators
 
 
@@ -48,41 +50,60 @@ public class Enemy : MonoBehaviour
 
         if (xPos != 0) //Rotate player sprite to the left
         { GetComponent<SpriteRenderer>().flipX = xPos < 0; }
+
+        FollowTarget();
     }
 
     void SpawnBullet()
     {
-        Instantiate(bulletEnemy, transform.position + bulletOffset, transform.rotation);
+        Instantiate(bulletEnemy, pointfire.position, pointfire.rotation);
+        Instantiate(bulletEnemy, pointfire2.position, pointfire2.rotation);
+    }
+
+    private void FollowTarget()
+    {
+        if (target != null)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, target.position, Enemyspeed * Time.deltaTime);//The enemy follow the player
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player") //the enemy follow the player when the player enter on the collider's enemy
+        if (collision.tag == "Player") //the enemy 
         {
             InvokeRepeating("SpawnBullet", 1.0f, 6.0f);
             Enemyspeed = Enemyspeed- move;
+            target = collision.transform;
         }
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Player") //If the enemy touch boxcollider's player, it's destroy
+        if (collision.gameObject.tag == "Player") //If the enemy touch boxcollider's player, it lose health
         {
             healthPts--;
         }
 
 
-        if (collision.gameObject.tag == "Bullet")
+        if (collision.gameObject.tag == "Bullet")//If the enemy touch boxcollider's bullet, it lose health
         {
             healthPts--;
             Destroy(collision.gameObject);
         }
+
+        if (collision.gameObject.tag == "BulletG")//If the enemy touch boxcollider's bullet, it lose health
+        {
+            healthPts= healthPts-5;
+            Destroy(collision.gameObject);
+        }
     }
-    private void OnTriggerExit2D(Collider2D collision)//the enemy stop follow the player when the player exit on the collider's enemy
+    private void OnTriggerExit2D(Collider2D collision)//the enemy
     {
         if (collision.tag == "Player")
         {
             CancelInvoke("SpawnBullet");
             Enemyspeed = Enemyspeed + move;
+            target = null;
         }
     }
 }
